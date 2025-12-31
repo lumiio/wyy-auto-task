@@ -1,0 +1,20 @@
+[Unit]
+Description=NetEase Cloud Music daily bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 改成你 VPS 上的实际路径和用户
+WorkingDirectory=/opt/netease-bot
+ExecStart=/opt/netease-bot/.venv/bin/python -m bot.main
+Restart=always
+RestartSec=10
+User=www-data
+Group=www-data
+# 日志走 journald，也可以直接看 logs/bot.log
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

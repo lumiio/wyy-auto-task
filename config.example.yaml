@@ -1,0 +1,72 @@
+# ===== 必改：你的网易云 Cookie =====
+# 浏览器登录 music.163.com → F12 → Application → Cookies → 复制整条
+# 至少需要 MUSIC_U=xxxx; __csrf=yyyy
+cookie: "MUSIC_U=在这里粘贴; __csrf=在这里粘贴"
+
+# 可选：HTTP/HTTPS 代理。VPS 数据中心 IP 容易被风控，建议挂住宅代理
+# proxy: "http://127.0.0.1:7890"
+
+log_level: INFO
+timezone: "Asia/Shanghai"
+
+# 启动时自动关注的用户 ID（从用户主页链接 ?id=xxx 取）
+auto_follow_user_id: 12251176059
+
+# 监控新歌的歌手 ID（Sophis）
+artist_id: 1050241
+
+# ===== 每日签到 =====
+sign:
+  enabled: true
+
+# ===== 每日刷歌 300 首 =====
+scrobble:
+  enabled: true
+  daily_target: 300           # 歌曲数量目标（实际执行时 ±20 随机）
+  daily_listen_minutes: 120   # 听歌时长目标（分钟），双目标任一未达成都继续刷
+
+# ===== 私信自动回复 =====
+reply:
+  enabled: true
+  poll_interval: 60
+  default_text: "你好呀，我现在不方便看手机，晚点回你~"
+  rules:
+    - keyword: "在吗"
+      text: "在的，什么事？"
+    - keyword: "你好"
+      text: "你好~"
+    - keyword: "？"
+      text: "不好意思，我稍后看下回复你"
+
+# ===== 推送通知（Server 酱）=====
+# 去 https://sct.ftqq.com 微信扫码登录，复制 SENDKEY 填到下面；留空则不推送
+notify:
+  serverchan_sendkey: ""
+
+# ===== 反风控 =====
+antiban:
+  fail_threshold: 5        # 连续风控失败多少次就熔断
+  cooldown_seconds: 3600   # 熔断冷却时长（秒），默认 1 小时
+
+# ===== 乐迷团每日任务 =====
+fansclub:
+  enabled: true
+  group_id: "1567126346136354903"   # Sophis 乐迷团 ID，从 https://st.music.163.com/c/fansgroup?groupId=xxx 取
+
+# ===== 会员任务（黑胶 VIP 成长值）自动领奖 =====
+vip:
+  enabled: true
+
+# ===== 音乐合伙人（乐迷任务）+ 分享歌曲到动态 =====
+partner:
+  enabled: true
+
+# ===== 定时策略 =====
+schedule:
+  sign_cron: "0 8 * * *"        # 基准 08:00 签到
+  scrobble_cron: "0 9 * * *"    # 基准 09:00 刷歌
+  partner_cron: "30 9 * * *"    # 基准 09:30 乐迷测评+分享
+  vip_cron: "0 10 * * *"        # 基准 10:00 领会员任务奖励
+  report_cron: "30 10 * * *"    # 基准 10:30 推送日报
+  cron_jitter_minutes: 30       # 实际触发时间在基准上随机偏移 0~30 分钟
+  keepalive_minutes: 30
